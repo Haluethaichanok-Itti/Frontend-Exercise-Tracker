@@ -5,7 +5,7 @@ import "./assets/styles/index.css";
 import { BrowserRouter } from "react-router-dom";
 import jwtInterceptor from "./utils/jwtInterceptor";
 import { AuthProvider } from "./contexts/authentication";
-
+//axios interceptor for checking token, attach the token to the header in every request 
 jwtInterceptor();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
