@@ -114,7 +114,7 @@ const RegisterForm = ({
     setSrcImg(imageSrc);
     setFormValues((prevInputs) => ({
       ...prevInputs,
-      // picture: srcImg,
+
       picture: imageSrc,
     }));
   }, [webcamRef, setFormValues]);
