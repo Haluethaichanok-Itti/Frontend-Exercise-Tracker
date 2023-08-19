@@ -16,6 +16,7 @@ function FormRegister() {
   const [isSubmit, setIsSubmit] = useState(false);
   const [error, setError] = useState("");
   const [errorImg, setErrorImg] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
   const [formValues, setFormValues] = useState({
@@ -45,7 +46,7 @@ function FormRegister() {
       setFormValues((prevInputs) => ({ ...prevInputs, picture: file }));
     }
   }
-
+  console.log("formValues:", formValues);
   // Function to handle save inputs
   const saveInput = async (e) => {
     e.preventDefault();
@@ -58,6 +59,7 @@ function FormRegister() {
     if (Object.keys(error).length === 0) {
       setIsProcessing(!isProcessing);
       const { confirmpassword, ...userData } = formValues;
+
       const formData = new FormData();
 
       for (const [key, value] of Object.entries(userData)) {
@@ -109,6 +111,10 @@ function FormRegister() {
           error={error}
           isProcessing={isProcessing}
           errorImg={errorImg}
+          setSrcImg={setSrcImg}
+          setFormValues={setFormValues}
+          imageUrl={imageUrl}
+          setImageUrl={setImageUrl}
         />
         <div className="register-cats">
           <img src={Cat} alt="Muscular Orange Cat" className="right" />
