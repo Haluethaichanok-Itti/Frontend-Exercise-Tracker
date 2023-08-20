@@ -47,7 +47,7 @@ function FormRegister() {
       setOpenChoose(false);
     }
   }
-  console.log("formValues:", formValues);
+
   // Function to handle save inputs
   const saveInput = async (e) => {
     e.preventDefault();
