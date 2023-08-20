@@ -47,11 +47,12 @@ function FormRegister() {
       setOpenChoose(false);
     }
   }
-  console.log("formValues:", formValues);
+
   // Function to handle save inputs
   const saveInput = async (e) => {
     e.preventDefault();
     const backend = import.meta.env.VITE_BACKEND_URL;
+    // const backend = process.env.VITE_BACKEND_URL;
     setErrorImg("");
     setIsSubmit(true);
 
