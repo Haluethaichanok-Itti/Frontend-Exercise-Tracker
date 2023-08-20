@@ -143,7 +143,7 @@ const Profile = () => {
     }));
     setOpenChoose(false);
   }, [webcamRef, setUserData]);
-  console.log("userData:", userData);
+
   //close window react webcam
   const uploadRefProfile = useRef(null);
   useEffect(() => {

@@ -113,7 +113,7 @@ function FormRegister() {
     }));
     setOpenChoose(false);
   }, [webcamRef, setFormValues]);
-  console.log("formval:", formValues);
+
   //close window react webcam
   const uploadRef = useRef(null);
   useEffect(() => {

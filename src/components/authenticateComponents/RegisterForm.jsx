@@ -49,32 +49,6 @@ const RegisterForm = ({
           </div>
         </label>
       </div>
-      {/* {openChoose && (
-        <div className="gb-black">
-          <div className="choose-box">
-            <label htmlFor="uploadInput">
-              <input
-                onChange={handleFileChange}
-                name="picture"
-                id="uploadInput"
-                type="file"
-                accept="image/*"
-              />
-              <button onClick={capture}>Capture photo</button>
-              
-            </label>
-            
-            <Webcam
-              audio={false}
-              height={200}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-              width={1280}
-              videoConstraints={videoConstraints}
-            />
-          </div>
-        </div>
-      )} */}
 
       <div className="allInform">
         {/* First Name */}
