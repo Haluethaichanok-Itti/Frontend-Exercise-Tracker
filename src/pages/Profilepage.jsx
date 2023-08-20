@@ -1,5 +1,5 @@
 // Profile.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router";
 import { validateProfile } from "../utils/validateProfile";
 import axios from "axios";
@@ -7,7 +7,7 @@ import swal from "sweetalert";
 import Layout from "../components/Layout";
 import ProfileForm from "../components/ProfileForm";
 import "../assets/styles/ProfilePage.css";
-
+import Webcam from "react-webcam";
 const Profile = () => {
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const Profile = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorImg, setErrorImg] = useState("");
-
+  const [openChoose, setOpenChoose] = useState(false);
   const fetchData = async () => {
     const backend = import.meta.env.VITE_BACKEND_URL;
     try {
@@ -35,6 +35,8 @@ const Profile = () => {
       const file = files[0];
       setSrcImg(URL.createObjectURL(file));
       setUserData((prevData) => ({ ...prevData, picture: file }));
+      setOpenChoose(false);
+      console.log("change");
     }
   };
 
@@ -124,8 +126,69 @@ const Profile = () => {
     fetchData();
   }, []);
 
+  //react webcam
+  const videoConstraints = {
+    width: 1280,
+    height: 720,
+    facingMode: "user",
+  };
+
+  const webcamRef = useRef(null);
+  const capture = React.useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setSrcImg(imageSrc);
+    setUserData((prevInputs) => ({
+      ...prevInputs,
+      picture: imageSrc,
+    }));
+    setOpenChoose(false);
+  }, [webcamRef, setUserData]);
+
+  //close window react webcam
+  const uploadRefProfile = useRef(null);
+  useEffect(() => {
+    document.addEventListener("mousedown", (e) => {
+      if (!uploadRefProfile.current.contains(e.target)) {
+        setOpenChoose(false);
+      }
+    });
+  });
   return (
     <Layout>
+      {openChoose && (
+        <div className="gb-black" id="boxChoose">
+          <div className="choose-box">
+            <div className="wrap-select-file">
+              <div className="select-file" ref={uploadRefProfile}>
+                <div className="btn-wrap-select-file">
+                  <label htmlFor="uploadInput" className="upload-img-label">
+                    Upload File
+                  </label>
+                  <input
+                    onChange={handleChangePic}
+                    name="picture"
+                    id="uploadInput"
+                    type="file"
+                    accept="image/*"
+                  />
+                </div>
+                <div className="btn-wrap-select-file">
+                  <button onClick={capture}>Capture photo</button>
+                </div>
+              </div>
+            </div>
+            {/* selfie */}
+            <Webcam
+              audio={false}
+              height={380}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              width={1280}
+              videoConstraints={videoConstraints}
+            />
+          </div>
+        </div>
+      )}
       <ProfileForm
         userData={userData}
         srcImg={srcImg}
@@ -136,6 +199,8 @@ const Profile = () => {
         handleUpdateProfile={handleUpdateProfile}
         handleDeleteProfile={handleDeleteProfile}
         errorImg={errorImg}
+        setOpenChoose={setOpenChoose}
+        setSrcImg={setSrcImg}
       />
     </Layout>
   );

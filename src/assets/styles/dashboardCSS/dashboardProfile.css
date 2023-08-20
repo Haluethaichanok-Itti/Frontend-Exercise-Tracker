@@ -1,39 +1,34 @@
 .dashboard-profile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dashboard-profile-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 7rem;
-    height: 7rem;
-    background-color: grey;
-    border-radius: 50%;
-    border: 1px solid black;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 9rem;
+  height: 9rem;
+  background-color: grey;
+  border-radius: 50%;
+  border: 1px solid black;
+  overflow: hidden;
 }
 
 .dashboard-profile-image img {
-    width: 8rem;
-    height: auto;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .dashboard-profile h3 {
-    font-size: 120%;
-    font-weight: bold;
-    margin-left: 25px;
-    color: black;
+  font-size: 120%;
+  font-weight: bold;
+  margin-left: 25px;
+  color: black;
 }
-
-
-
-
-
 
 /* @media screen and (max-width: 1200px) {
     .dashboard-profile img {

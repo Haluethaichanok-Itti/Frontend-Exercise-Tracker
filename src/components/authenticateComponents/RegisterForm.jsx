@@ -1,6 +1,7 @@
 import React from "react";
 import "../../assets/styles/authenticateCSS/RegisterForm.css";
 import BarLoader from "react-spinners/BarLoader";
+import Webcam from "react-webcam";
 
 const RegisterForm = ({
   srcImg,
@@ -12,28 +13,41 @@ const RegisterForm = ({
   error,
   isProcessing,
   errorImg,
+  setSrcImg,
+  setFormValues,
+  imageUrl,
+  setImageUrl,
+  setIsSubmit,
+  openChoose,
+  setOpenChoose,
 }) => {
+  const openWindow = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    setOpenChoose(true);
+    setSrcImg("");
+  };
+
   return (
     <form onSubmit={saveInput} className="form">
       <h1 className="register-title">Register</h1>
 
       {/* Profile Picture */}
+
       <div className="wrap">
-        <input
-          onChange={handleFileChange}
-          name="picture"
-          id="uploadInput"
-          type="file"
-          accept="image/*"
-        />
-        <label htmlFor="uploadInput">
+        <label htmlFor="openWin">
           <img
             id="profilePhoto"
             src={srcImg}
             className={srcImg ? "uploaded-picture" : ""}
           />
         </label>
-        <div className="plus-symbol">+</div>
+        <label htmlFor="openWin">
+          <div className="plus-symbols">
+            <button onClick={openWindow} id="openWin">
+              +
+            </button>
+          </div>
+        </label>
       </div>
 
       <div className="allInform">
