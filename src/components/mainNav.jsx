@@ -1,11 +1,11 @@
 import navLogoImage from "/cat/navbar-logo.png";
 import "../assets/styles/mainNav.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/authentication";
-
+import defaultProfile from "/cat/head-logo.png";
 export default function MainNav() {
   //if dropdown === true, dropdown-menu will appear
   const [isDropdown, setIsDropdown] = useState(false);
@@ -31,7 +31,10 @@ export default function MainNav() {
     profile = (
       <div className="profile-container">
         <div className="profile-image">
-          <img src={currentUser.picture ? currentUser.picture : navLogoImage} alt="Orange-cat's logo" />
+          <img
+            src={currentUser.picture ? currentUser.picture : defaultProfile}
+            alt="Orange-cat's logo"
+          />
         </div>
         <span
           onClick={() => setIsDropdown(!isDropdown)}
@@ -138,7 +141,7 @@ export default function MainNav() {
   return (
     <nav className="homeNav">
       <Link className="logo-link" to="/">
-        <div onClick={() => window.scrollTo(0,0)} className="logo-container">
+        <div onClick={() => window.scrollTo(0, 0)} className="logo-container">
           <img src={navLogoImage} alt="Orange-cat's logo" />
           <span className="navbar-link">Orange Cat</span>
         </div>
@@ -172,7 +175,11 @@ export default function MainNav() {
 
       <span className="dropdown-btn">
         {/* toggle dropdown-menu */}
-        <FontAwesomeIcon onClick={() => setIsDropdown(!isDropdown)} icon={faBars} size="xl"/>
+        <FontAwesomeIcon
+          onClick={() => setIsDropdown(!isDropdown)}
+          icon={faBars}
+          size="xl"
+        />
       </span>
 
       {isDropdown && dropdown}

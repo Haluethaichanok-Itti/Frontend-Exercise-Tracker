@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from "react";
+import React from "react";
 import "../../assets/styles/authenticateCSS/RegisterForm.css";
 import BarLoader from "react-spinners/BarLoader";
 import Webcam from "react-webcam";
@@ -17,114 +17,16 @@ const RegisterForm = ({
   setFormValues,
   imageUrl,
   setImageUrl,
+  setIsSubmit,
+  openChoose,
+  setOpenChoose,
 }) => {
-  const [openChoose, setOpenChoose] = useState(false);
   const openWindow = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
     setOpenChoose(true);
-  };
-  //camera
-  const videoConstraints = {
-    width: 1280,
-    height: 720,
-    facingMode: "user",
-  };
-
-  const webcamRef = useRef(null);
-
-  // const capture = useCallback(() => {
-  //   const imageSrc = webcamRef.current.getScreenshot();
-  //   setSrcImg(imageSrc); // Store the captured image in state
-
-  //   // setFormValues((prevInputs) => ({
-  //   //   ...prevInputs,
-  //   //   picture: imageSrc, // Store the captured image in formValues
-  //   // }));
-
-  //   //try
-  //   // // Extract the base64-encoded data part of the URI
-  //   // const base64Data = imageSrc.split(",")[1];
-
-  //   // // Convert base64-encoded data to binary data
-  //   // const binaryData = atob(base64Data);
-
-  //   // // Create a Uint8Array from binary data
-  //   // const uint8Array = new Uint8Array(binaryData.length);
-  //   // for (let i = 0; i < binaryData.length; i++) {
-  //   //   uint8Array[i] = binaryData.charCodeAt(i);
-  //   // }
-  //   // // Create a Blob object from Uint8Array
-  //   // const blob = new Blob([uint8Array], { type: "image/jpeg" });
-
-  //   // Generate a URL from the Blob
-  //   // const imageUrl = URL.createObjectURL(blob);
-  //   setImageUrl(URL.createObjectURL(blob));
-
-  //   // Now, you can use the imageUrl to display or save the image
-  //   console.log("Image URL:", imageUrl);
-
-  //   // setFormValues((prevInputs) => ({
-  //   //   ...prevInputs,
-  //   //   picture: imageUrl, // Store the captured image in formValues
-  //   // }));
-
-  //   const base64Data = imageSrc.split(",")[1];
-  //   const binaryData = atob(base64Data);
-  //   const uint8Array = new Uint8Array(binaryData.length);
-  //   for (let i = 0; i < binaryData.length; i++) {
-  //     uint8Array[i] = binaryData.charCodeAt(i);
-  //   }
-  //   const blob = new Blob([uint8Array], { type: "image/jpeg" });
-
-  //   // Convert the Blob to a File
-  //   const file = new File([blob], "image.jpg", { type: "image/jpeg" });
-
-  //   setFormValues((prevInputs) => ({
-  //     ...prevInputs,
-  //     picture: file,
-  //   }));
-  // }, [setSrcImg, setFormValues]);
-  // const capture = useCallback(() => {
-  //   const imageSrc = webcamRef.current.getScreenshot();
-
-  //   // Convert the base64 image data to a Blob
-  //   const byteCharacters = atob(imageSrc.split(",")[1]);
-  //   const byteNumbers = new Array(byteCharacters.length);
-  //   for (let i = 0; i < byteCharacters.length; i++) {
-  //     byteNumbers[i] = byteCharacters.charCodeAt(i);
-  //   }
-  //   const byteArray = new Uint8Array(byteNumbers);
-  //   const blob = new Blob([byteArray], { type: "image/jpeg" });
-
-  //   // Create a File object from the Blob
-  //   const file = new File([blob], "image.jpg", { type: "image/jpeg" });
-  //   // Store the captured image in state for display
-  //   setSrcImg(imageSrc);
-  //   console.log(srcImg);
-  //   // Update the form values with the captured image
-  //   setFormValues((prevInputs) => ({
-  //     ...prevInputs,
-  //     picture: srcImg,
-  //   }));
-
-  //   // // Store the captured image in state for display
-  //   // setSrcImg(imageSrc);
-  // }, [setSrcImg, setFormValues]);
-  const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setSrcImg(imageSrc);
-    setFormValues((prevInputs) => ({
-      ...prevInputs,
-
-      picture: imageSrc,
-    }));
-  }, [webcamRef, setFormValues]);
-  console.log("formval:", formValues);
-  // console.log("Type of srcImg:", typeof srcImg);
-  // console.log(srcImg);
-  //Function Reset photo
-  const handleOnReset = () => {
     setSrcImg("");
   };
+
   return (
     <form onSubmit={saveInput} className="form">
       <h1 className="register-title">Register</h1>
@@ -132,33 +34,22 @@ const RegisterForm = ({
       {/* Profile Picture */}
 
       <div className="wrap">
-        <label htmlFor="uploadInput">
+        <label htmlFor="openWin">
           <img
             id="profilePhoto"
-            // src={srcImg}
             src={srcImg}
             className={srcImg ? "uploaded-picture" : ""}
           />
         </label>
-
-        {/* {srcImg && (
-          <label htmlFor="uploadInput">
-            <div className="captured-image-container">
-              <img
-                id="profilePhoto"
-                src={srcImg}
-                alt="Captured"
-                // className="captured-image"
-              />
-            </div>
-          </label>
-        )} */}
-
-        <div className="plus-symbols" onClick={openWindow}>
-          <button>+</button>
-        </div>
+        <label htmlFor="openWin">
+          <div className="plus-symbols">
+            <button onClick={openWindow} id="openWin">
+              +
+            </button>
+          </div>
+        </label>
       </div>
-      {openChoose && (
+      {/* {openChoose && (
         <div className="gb-black">
           <div className="choose-box">
             <label htmlFor="uploadInput">
@@ -170,30 +61,20 @@ const RegisterForm = ({
                 accept="image/*"
               />
               <button onClick={capture}>Capture photo</button>
-              <button onClick={handleOnReset}>Reset photo</button>
+              
             </label>
-            {/* selfie */}
+            
             <Webcam
               audio={false}
-              height={120}
+              height={200}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               width={1280}
               videoConstraints={videoConstraints}
             />
-
-            {/* {capturedImage && (
-              <div className="captured-image-container">
-                <img
-                  src={capturedImage}
-                  alt="Captured"
-                  className="captured-image"
-                />
-              </div>
-            )} */}
           </div>
         </div>
-      )}
+      )} */}
 
       <div className="allInform">
         {/* First Name */}

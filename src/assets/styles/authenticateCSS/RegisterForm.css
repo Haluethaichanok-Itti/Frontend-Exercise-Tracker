@@ -176,6 +176,11 @@
 .error-message {
   color: red;
 }
+#openWin {
+  background-color: transparent;
+  border: transparent;
+  font-size: larger;
+}
 
 @media screen and (max-width: 768px) {
   .form {

@@ -7,7 +7,7 @@ export const validate = (values) => {
   const birthDate = new Date(values.birthDate);
   const age = currentDate.getFullYear() - birthDate.getFullYear();
 
-  if (!values.firstName) {
+  if (!values.firstName && isSubmit) {
     errors.firstName = "First Name is required!";
   }
 

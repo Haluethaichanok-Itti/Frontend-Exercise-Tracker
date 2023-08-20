@@ -1,5 +1,5 @@
 // ProfileForm.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import BarLoader from "react-spinners/BarLoader";
 
 const ProfileForm = ({
@@ -12,7 +12,14 @@ const ProfileForm = ({
   handleUpdateProfile,
   handleDeleteProfile,
   errorImg,
+  setOpenChoose,
+  setSrcImg,
 }) => {
+  const openWindow = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    setOpenChoose(true);
+  };
+
   return (
     <form className="editform">
       <a href="/dashboard" className="cross">
@@ -31,14 +38,20 @@ const ProfileForm = ({
               type="file"
               accept="image/*"
             />
-            <label htmlFor="uploadInput">
+            <label htmlFor="openWin">
               <img
                 id="profilePhoto"
                 src={srcImg}
                 className={srcImg ? "uploaded-picture" : ""}
               />
             </label>
-            <div className="plus-symbol">+</div>
+            <label htmlFor="openWin">
+              <div className="plus-symbols">
+                <button onClick={openWindow} id="openWin">
+                  +
+                </button>
+              </div>
+            </label>
           </div>
 
           <div className="allBtnProfile">
